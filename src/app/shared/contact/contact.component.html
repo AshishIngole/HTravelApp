@@ -1,0 +1,27 @@
+<div>
+    <h3 class="verticalLine">
+        <span class="text-style text-muted">Contact details</span>
+
+        <div class='row col-lg-12' *ngIf="!isVisibleCart">
+            <br>
+            <h4> Given Name : </h4> {{personData.name}}
+            <h4> Family Name : </h4> {{personData.lastname}}
+        </div>
+
+
+
+    </h3>
+    <div *ngIf="isVisibleCart">
+        <br>
+        <h4> Given Name : </h4>
+        <input (keyup)="onKey($event)" value={{personData.name}}>
+        <h4> Given Name : </h4>
+        <input (keyup)="onKeyT($event)" value={{personData.lastname}}>
+       
+
+    </div>
+    <div class="container">
+    <app-button *ngIf="isVisible" [btnText]="'Edit'" class = "btnRig" [btnClass]="'btn btn-danger '" [wrapperClass]="'text-right'" (click)="editClick()"></app-button>
+    <app-button *ngIf="isVisibleSave" [btnText]="'Save'" class = "btnRig"[btnClass]="'btn btn-danger'" [wrapperClass]="'text-right'" (click)="saveClick()"></app-button>
+</div>
+</div>
