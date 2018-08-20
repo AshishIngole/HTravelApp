@@ -1,49 +1,56 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { AppService } from '../../app.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { AppServices } from '../../app.service';
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.css'],
-  providers: [AppService]
+  styleUrls: ['./contact.component.css']
 })
 export class ContactComponent implements OnInit {
-  personData: any = {};
-  @Input() isVisible: boolean;
-  @Input() isVisibleCart: boolean;
-  @Input() isVisibleSave: boolean;
-  constructor(private ser: AppService) {
-  }
+  @Input() name: any = {};
+  isEdited: boolean = false;
+  @Input() showEdit: boolean;
+  @Output() editEvent = new EventEmitter();
 
-  onKey(event: any) { 
-    this.personData.name = event.target.value; 
-  }
-
-  onKeyT(event: any) { 
-    this.personData.lastname = event.target.value; 
-  }
+  formData: any = {};
+  requireGivenName: boolean = false;
+  requireFamilyName: boolean = false;
+  constructor(private appSer: AppServices) { }
 
   ngOnInit() {
-    
-    this.ser.getData().subscribe((personData) => {
-      console.log(JSON.stringify(personData));
-      this.personData = personData;
-
-    })
+    this.initData();
+    this.formData = {
+      isEdit: false
+    }
   }
+  initData() {
 
-  editClick(){
-    
-    this.isVisibleCart =true;
-    this.isVisibleSave =true;
-    this.isVisible = false;
-    console.log(this.isVisible);
-  }
-  saveClick(){
-    this.isVisibleSave =false;
-    this.isVisible = true;
-    this.isVisibleCart =false;
-    
-  }
+    this.appSer.getJSON().subscribe(data => {
+      this.name = data;
+    }
+      , error => console.log(error));
 
+  }
+  editData(event) {
+    this.isEdited = !this.isEdited;
+    this.formData.isEdit = true;
+    this.editEvent.emit(this.formData);
+    console.log('edit called');
+  }
+  saveData(event) {
+    if (this.name.givenName.trim() !== '' && this.name.familyName.trim() !== '') {
+      this.isEdited = !this.isEdited;
+      this.formData.isEdit = false;
+      this.editEvent.emit(this.formData);
+    }
+  }
+  checkData(event, type) {
+    let val = false;
+    if (event.trim() === '')
+      val = true;
+    if (type === 'givenName')
+      this.requireGivenName = val;
+    if (type === 'familyName')
+      this.requireFamilyName = val;
+  }
 }

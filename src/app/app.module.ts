@@ -1,31 +1,25 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { ProgressbarModule } from 'ngx-bootstrap';
+import {HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { RouterModule} from '@angular/router';
-import { AppRoutes} from './app.router'; 
+import { HelloComponent } from './hello.component';
 import { PersonalComponent } from './personal/personal.component';
 import { ReviewComponent } from './review/review.component';
 import { AcknowledgementComponent } from './acknowledgement/acknowledgement.component';
+import {AppServices} from './app.service';
+import { ProgressbarModule } from 'ngx-bootstrap';
 import { ShareModule } from './shared/shared.module';
-import { AppService} from './app.service';
-import {HttpClientModule} from '@angular/common/http';
-
-
+import {RouterModule} from '@angular/router';
+import { MomentModule } from 'angular2-moment';
+import {appRoutes} from './app.router';
 @NgModule({
-  declarations: [
-    AppComponent,PersonalComponent, ReviewComponent, AcknowledgementComponent
-  ],
-  imports: [
-    BrowserModule,ProgressbarModule.forRoot(),  ShareModule,HttpClientModule,
+  imports:      [ BrowserModule, FormsModule, HttpClientModule, ProgressbarModule.forRoot(), ShareModule,
     RouterModule.forRoot(
-      AppRoutes
-    )
-  ],
-  providers: [AppService],
-  bootstrap: [AppComponent]
+      appRoutes
+    ), MomentModule ],
+  declarations: [ AppComponent, HelloComponent, PersonalComponent, ReviewComponent, AcknowledgementComponent ],
+  bootstrap:    [ AppComponent ],
+  providers: [AppServices]
 })
-
-
 export class AppModule { }

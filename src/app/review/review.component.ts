@@ -6,14 +6,19 @@ import {Router} from '@angular/router';
   styleUrls: ['./review.component.css']
 })
 export class ReviewComponent implements OnInit {
-  isVisible:boolean = true;
-  isVisibleCart:boolean = false;
-  
+  disableBtn: boolean = false;
   constructor(private router: Router) { }
 
   ngOnInit() {
   }
   route(){
-     this.router.navigate(['/acknowledgement']);
-  }
+    this.router.navigate(['/acknowledgement']);
+ }
+ updateData(event){
+   if(event.isEdit){
+       this.disableBtn = true;
+   } else {
+      this.disableBtn = false;
+   }
+ }
 }

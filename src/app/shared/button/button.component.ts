@@ -9,8 +9,14 @@ export class ButtonComponent implements OnInit {
   @Input() btnText: string;
   @Input() btnClass: string;
   @Input() wrapperClass: string;
+  @Input() iconClass: string;
+  @Input() showIcon: boolean;
+  @Input() isDisabled: boolean;
   @Output() clickEvent = new EventEmitter(); 
-  constructor() { }
+  constructor() {
+    this.showIcon = false;
+    this.isDisabled = false;
+   }
   ngOnInit() {
   }
   buttonClick(){

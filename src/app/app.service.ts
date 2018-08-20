@@ -1,15 +1,21 @@
-import {HttpClient,HttpHeaders} from'@angular/common/http';
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable()
-export class AppService {
+export class AppServices{
 
-  constructor(private http:HttpClient) { }
-  getData(){
-    let head = new HttpHeaders();
-    head = head.set('Content-Type','application/json');
-    return this.http.get('/assets/personalData.json',{headers:head});
-
-  }
-
+    constructor(private http: HttpClient) {
+        
+        
+    }
+    public getHeader(){
+        let header = new HttpHeaders({
+            "Content-Type": "application/json"
+        });
+        return header;
+    }
+    public getJSON(): Observable<any> {
+         return this.http.get("./assets/file.json",{headers: this.getHeader()});
+     }
 }
